@@ -1,0 +1,16 @@
+.loading-screen {
+  background-image: url("/images/loading.png");
+  overflow: hidden;
+  background-size: 300px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: rgba(100, 100, 100, 0.3);
+  backdrop-filter: bluer(2px);
+
+  &__info {
+    margin-top: 257px;
+    color: rgb(175, 228, 35);
+    font-size: 1.6rem;
+    text-align: center;
+  }
+}

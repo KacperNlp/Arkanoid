@@ -1,5 +1,5 @@
 export class GameState {
-  constructor(level, pointToWin, diamonds, diamondsSpriteImages) {
+  constructor(level, pointToWin) {
     const _gameBoard = "";
 
     this._pointsToWin = pointToWin;

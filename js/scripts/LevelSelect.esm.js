@@ -24,15 +24,11 @@ class LevelSelect extends Common {
       this.element.removeChild(this.element.firstChild);
     }
 
-    console.log(this.element);
-
     gameLevels.some((gameLevel) => this.createButton(gameLevel.level));
   }
 
   createButton(value) {
     if (!userData.checkAvailabilityLevel(value)) return;
-
-    console.log(value);
 
     const button = document.createElement("button");
 
@@ -62,13 +58,13 @@ class LevelSelect extends Common {
 
     if (!this.#media.spriteSheet) {
       this.#media.spriteSheet = this.#loader.loadImage(
-        "images/diamonds-transparent.png"
+        "/images/result-screen-win.png"
       );
     }
 
     if (!this.#media.backgroundMusic) {
       this.#media.backgroundMusic = this.#loader.loadSound(
-        "/sounds/music-background.mp3"
+        "/sounds/music-backgroundII.mp3"
       );
     }
 
