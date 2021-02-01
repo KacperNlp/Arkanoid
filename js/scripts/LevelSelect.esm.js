@@ -14,11 +14,6 @@ class LevelSelect extends Common {
     super(LEVEL_SELECT_ID);
   }
 
-  #canvas = canvas;
-  #loader = loader;
-  #game = game;
-  #media = media;
-
   createButtons() {
     while (this.element.firstChild) {
       this.element.removeChild(this.element.firstChild);
@@ -46,31 +41,27 @@ class LevelSelect extends Common {
     event.preventDefault();
 
     this.changeVisibilityOfScreen(this.element, HIDDEN_SCREEN);
-    this.changeVisibilityOfScreen(this.#canvas.element, VISIBLE_SCREEN);
+    this.changeVisibilityOfScreen(canvas.element, VISIBLE_SCREEN);
     this.loadLevel(event.currentTarget.value);
   };
 
   loadLevel(level) {
-    if (this.#media.spriteSheet && this.#media.backgroundMusic) {
-      this.#game.playLevel(level);
+    if (media.backgroundImage && media.backgroundMusic) {
+      game.playLevel(level);
       return;
     }
 
-    if (!this.#media.spriteSheet) {
-      this.#media.spriteSheet = this.#loader.loadImage(
-        "/images/result-screen-win.png"
-      );
+    if (!media.backgroundImage) {
+      media.backgroundImage = loader.loadImage("/images/spritessheet.png");
     }
 
-    if (!this.#media.backgroundMusic) {
-      this.#media.backgroundMusic = this.#loader.loadSound(
+    if (!media.backgroundMusic) {
+      media.backgroundMusic = loader.loadSound(
         "/sounds/music-backgroundII.mp3"
       );
     }
 
-    window.addEventListener(DATALOADED_EVENT_NAME, () =>
-      this.#game.playLevel(level)
-    );
+    window.addEventListener(DATALOADED_EVENT_NAME, () => game.playLevel(level));
   }
 }
 

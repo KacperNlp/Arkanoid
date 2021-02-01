@@ -8,42 +8,47 @@ import { resultScreen } from "./ResultScreen.esm.js";
 import { userData } from "./UserData.esm.js";
 import { mainMenu } from "./MainMenu.esm.js";
 import { backToMenu } from "./BackToMenu.esm.js";
+import { Sprite } from "./Sprite.esm.js";
 
 class Game extends Common {
   constructor() {
     super();
   }
 
-  #canvas = canvas;
-  #media = media;
-
   playLevel() {
     window.removeEventListener(DATALOADED_EVENT_NAME, this.playLevel);
 
+    debugger;
+    this.background = new Sprite(0, 33, 800, 450, media.backgroundImage, 0, 0);
     this.gameState = new GameState();
 
-    this.changeVisibilityOfScreen(this.#canvas.element, VISIBLE_SCREEN);
+    this.changeVisibilityOfScreen(canvas.element, VISIBLE_SCREEN);
     this.changeVisibilityOfScreen(mainMenu.miniSettingsLayer, VISIBLE_SCREEN);
     this.changeVisibilityOfScreen(backToMenu.element, HIDDEN_SCREEN);
 
-    this.#media.isInLevel = true;
-    this.#media.playBackgroundMusic();
+    media.isInLevel = true;
+    media.playBackgroundMusic();
 
     this.animate();
   }
 
   animate() {
-    this.checksEndGame();
+    this.#drawSprites();
+    //this.#checksEndGame();
   }
 
-  checksEndGame() {
+  #drawSprites() {
+    this.background.draw(0, 1.25);
+  }
+
+  #checksEndGame() {
     if (
       !this.gameState.getLeftMovements() &&
       !this.gameState.getIsMoving() &&
       !this.gameState.getIsSwaping()
     ) {
-      this.#media.isInLevel = false;
-      this.#media.stopBackgroundMusice();
+      media.isInLevel = false;
+      media.stopBackgroundMusice();
 
       const isPlayerWinner = this.gameState.isPlayerWinner();
       const currentLevel = Number(this.gameState.level);
