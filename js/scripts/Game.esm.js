@@ -9,7 +9,13 @@ import { userData } from "./UserData.esm.js";
 import { mainMenu } from "./MainMenu.esm.js";
 import { backToMenu } from "./BackToMenu.esm.js";
 import { Sprite } from "./Sprite.esm.js";
-import { Paddle } from "./Paddle.esm.js";
+import { Paddle, PADDLE_SPEED } from "./Paddle.esm.js";
+import {
+  keyboardControl,
+  MOVE_LEFT,
+  MOVE_RIGHT,
+  PAUSE,
+} from "./KeyboardControl.esm.js";
 
 class Game extends Common {
   constructor() {
@@ -34,8 +40,27 @@ class Game extends Common {
   }
 
   animate() {
+    this.#handleGameControle();
     this.#drawSprites();
-    //this.#checksEndGame();
+    this.#checksEndGame();
+  }
+
+  #handleGameControle() {
+    const { clickedKey: key } = keyboardControl;
+
+    this.#handlePause();
+
+    if (this.gameState.isPaused || !key) return;
+
+    switch (key) {
+      case MOVE_RIGHT:
+        for (let i = PADDLE_SPEED; i && this.paddle.moveRight(); i--);
+        break;
+
+      case MOVE_LEFT:
+        for (let i = PADDLE_SPEED; i && this.paddle.moveLeft(); i--);
+        break;
+    }
   }
 
   #drawSprites() {
@@ -44,11 +69,7 @@ class Game extends Common {
   }
 
   #checksEndGame() {
-    if (
-      !this.gameState.getLeftMovements() &&
-      !this.gameState.getIsMoving() &&
-      !this.gameState.getIsSwaping()
-    ) {
+    if (false) {
       media.isInLevel = false;
       media.stopBackgroundMusice();
 
@@ -74,6 +95,18 @@ class Game extends Common {
       );
     } else {
       this.animationFrame = window.requestAnimationFrame(() => this.animate());
+    }
+  }
+
+  #handlePause() {
+    const { clickedKey: key } = keyboardControl;
+
+    if (key === PAUSE && !this.gameState.isPaused) {
+      keyboardControl.clickedKey = null;
+      this.gameState.changePause(true);
+    } else if (key === PAUSE && this.gameState.isPaused) {
+      keyboardControl.clickedKey = null;
+      this.gameState.changePause(false);
     }
   }
 
