@@ -9,6 +9,7 @@ import { userData } from "./UserData.esm.js";
 import { mainMenu } from "./MainMenu.esm.js";
 import { backToMenu } from "./BackToMenu.esm.js";
 import { Sprite } from "./Sprite.esm.js";
+import { Paddle } from "./Paddle.esm.js";
 
 class Game extends Common {
   constructor() {
@@ -18,7 +19,7 @@ class Game extends Common {
   playLevel() {
     window.removeEventListener(DATALOADED_EVENT_NAME, this.playLevel);
 
-    debugger;
+    this.paddle = new Paddle();
     this.background = new Sprite(0, 33, 800, 450, media.backgroundImage, 0, 0);
     this.gameState = new GameState();
 
@@ -39,6 +40,7 @@ class Game extends Common {
 
   #drawSprites() {
     this.background.draw(0, 1.25);
+    this.paddle.draw();
   }
 
   #checksEndGame() {

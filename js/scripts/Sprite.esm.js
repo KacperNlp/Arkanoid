@@ -7,14 +7,14 @@ export class Sprite {
     width,
     height,
     spritesImage,
-    canvasMarginX,
-    canvasMarginY,
+    posX,
+    posY,
     numberOfSprites = 1,
     offset = { x: 0, y: 0 }
   ) {
     this.alpha = 255;
-    this.canvasMarginX = canvasMarginX;
-    this.canvasMarginY = canvasMarginY;
+    this.posX = posX;
+    this.posY = posY;
     this.width = width;
     this.height = height;
     this.numberOfSprites = numberOfSprites;
@@ -39,8 +39,8 @@ export class Sprite {
       this.startSpriteY,
       this.width,
       this.height,
-      this.canvasMarginX + this.offset.x,
-      this.canvasMarginY + this.offset.y,
+      this.posX + this.offset.x,
+      this.posY + this.offset.y,
       this.width * ratio,
       this.height * ratio
     );
