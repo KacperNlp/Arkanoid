@@ -1,0 +1,33 @@
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 210px;
+
+  &__button {
+    display: flex;
+    flex-grow: 0;
+    width: 124px;
+    max-width: 363px;
+    height: 60px;
+    margin-top: 10px;
+    background-image: url("../images/button-start.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-image: url("../images/button-start-hover.png");
+    }
+
+    &--is-settings {
+      background-image: url("../images/button-settings.png");
+
+      &:hover {
+        background-image: url("../images/button-settings-hover.png");
+      }
+    }
+  }
+}

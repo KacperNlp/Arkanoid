@@ -1,0 +1,25 @@
+.level-select {
+  display: flex;
+  padding: 175px 125px;
+  flex-wrap: wrap;
+  background-image: url("../images/levelselectscreen.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &__button {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    border: 0;
+    font-size: 2rem;
+    background-image: url("../images/levelicon.png");
+    background-size: cover;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+      background-image: url("../images/leveliconhover.png");
+    }
+  }
+}

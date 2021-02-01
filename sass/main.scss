@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --scale-value: 1;
+}
+
+html {
+  font-family: arial, sans-serif;
+  font-size: 10px;
+}
+
+body {
+  background: #000900;
+  user-select: none;
+  overflow: hidden;
+}
+
+*:focus {
+  outline: none;
+}
+
+@import "game-container";
+@import "start-screen";
+@import "level-select";
+@import "end-screen";
+@import "settings-screen";
+@import "mini-settings";
+@import "return-to-menu";
+
+.hidden {
+  display: none;
+}
