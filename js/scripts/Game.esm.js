@@ -16,6 +16,7 @@ import {
   MOVE_RIGHT,
   PAUSE,
 } from "./KeyboardControl.esm.js";
+import { Ball } from "./Ball.esm.js";
 
 class Game extends Common {
   constructor() {
@@ -25,6 +26,7 @@ class Game extends Common {
   playLevel() {
     window.removeEventListener(DATALOADED_EVENT_NAME, this.playLevel);
 
+    this.ball = new Ball();
     this.paddle = new Paddle();
     this.background = new Sprite(0, 33, 800, 450, media.backgroundImage, 0, 0);
     this.gameState = new GameState();
@@ -40,6 +42,7 @@ class Game extends Common {
   }
 
   animate() {
+    this.ball.moveAndCheckCollision();
     this.#handleGameControle();
     this.#drawSprites();
     this.#checksEndGame();
@@ -65,34 +68,16 @@ class Game extends Common {
 
   #drawSprites() {
     this.background.draw(0, 1.25);
+    this.ball.draw();
     this.paddle.draw();
   }
 
   #checksEndGame() {
-    if (false) {
+    if (this.ball.ballIsOutOfTheMap()) {
       media.isInLevel = false;
       media.stopBackgroundMusice();
 
-      const isPlayerWinner = this.gameState.isPlayerWinner();
-      const currentLevel = Number(this.gameState.level);
-      const nextLevel = currentLevel + 1;
-      const playerPoints = this.gameState.getPlayerPoints();
-
-      if (!!gameLevels[this.gameState.level] && isPlayerWinner) {
-        if (!userData.checkAvailabilityLevel(nextLevel)) {
-          userData.addNewLevel(nextLevel);
-        }
-      }
-      //update hight/best score in current level
-      if (playerPoints > userData.getHightScore(currentLevel)) {
-        userData.setHightScore(currentLevel, playerPoints);
-      }
-
-      resultScreen.viewResultScreen(
-        isPlayerWinner,
-        this.gameState.getPlayerPoints(),
-        this.gameState.level
-      );
+      resultScreen.viewResultScreen(true);
     } else {
       this.animationFrame = window.requestAnimationFrame(() => this.animate());
     }
