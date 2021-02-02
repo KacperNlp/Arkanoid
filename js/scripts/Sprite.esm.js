@@ -33,9 +33,11 @@ export class Sprite {
       this.#canvas.context.globalAlpha = this.alpha / 255;
     }
 
+    const spritePosX = this.startSpriteX + numberOfSprites * this.width;
+
     this.#canvas.context.drawImage(
       this.spritesImage,
-      this.startSpriteX,
+      spritePosX,
       this.startSpriteY,
       this.width,
       this.height,

@@ -91,10 +91,12 @@ class Game extends Common {
 
   #checksEndGame() {
     if (this.ball.ballIsOutOfTheMap()) {
-      media.isInLevel = false;
-      media.stopBackgroundMusice();
+      this.#finishGame(false);
+    } else if (!this.gameState.getGameBoard().length) {
+      const nextLevel = Number(this.gameState.level) + 1;
+      userData.addNewLevel(nextLevel);
 
-      resultScreen.viewResultScreen(true);
+      this.#finishGame(true);
     } else {
       this.animationFrame = window.requestAnimationFrame(() => this.animate());
     }
@@ -116,32 +118,11 @@ class Game extends Common {
     this.gameState.getGameBoard().forEach((block) => block.draw());
   }
 
-  swap(firstDiamond, secondDiamond) {
-    [
-      firstDiamond.x,
-      firstDiamond.y,
-      firstDiamond.match,
-      firstDiamond.kind,
-      firstDiamond.alpha,
-      secondDiamond.x,
-      secondDiamond.y,
-      secondDiamond.match,
-      secondDiamond.kind,
-      secondDiamond.alpha,
-    ] = [
-      secondDiamond.x,
-      secondDiamond.y,
-      secondDiamond.match,
-      secondDiamond.kind,
-      secondDiamond.alpha,
-      firstDiamond.x,
-      firstDiamond.y,
-      firstDiamond.match,
-      firstDiamond.kind,
-      firstDiamond.alpha,
-    ];
+  #finishGame(result) {
+    media.isInLevel = false;
+    media.stopBackgroundMusice();
 
-    this.gameState.setIsMoving(true);
+    resultScreen.viewResultScreen(result);
   }
 }
 

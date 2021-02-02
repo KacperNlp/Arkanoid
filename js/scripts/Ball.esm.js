@@ -2,6 +2,7 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./Canvas.esm.js";
 import { media } from "./Media.esm.js";
 import { Sprite } from "./Sprite.esm.js";
 import { PADDLE_INITIAL_POSITION_Y } from "./Paddle.esm.js";
+import { game } from "./Game.esm.js";
 
 const BALL_SIZE = 22;
 const BALL_SPRITE_POSITION_X = 232;
@@ -26,6 +27,8 @@ export class Ball extends Sprite {
   }
 
   moveAndCheckCollision(blocks) {
+    if (game.gameState.isPaused) return;
+
     const { directionX, directionY } = this;
     const hittedBlock = [];
 
