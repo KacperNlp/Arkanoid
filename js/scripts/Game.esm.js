@@ -23,13 +23,13 @@ class Game extends Common {
     super();
   }
 
-  playLevel() {
+  playLevel(level) {
     window.removeEventListener(DATALOADED_EVENT_NAME, this.playLevel);
 
     this.ball = new Ball();
     this.paddle = new Paddle();
     this.background = new Sprite(0, 33, 800, 450, media.backgroundImage, 0, 0);
-    this.gameState = new GameState();
+    this.gameState = new GameState(level);
 
     this.changeVisibilityOfScreen(canvas.element, VISIBLE_SCREEN);
     this.changeVisibilityOfScreen(mainMenu.miniSettingsLayer, VISIBLE_SCREEN);
@@ -84,6 +84,7 @@ class Game extends Common {
 
   #drawSprites() {
     this.background.draw(0, 1.25);
+    this.#drawBlocks();
     this.ball.draw();
     this.paddle.draw();
   }
@@ -104,11 +105,15 @@ class Game extends Common {
 
     if (key === PAUSE && !this.gameState.isPaused) {
       keyboardControl.clickedKey = null;
-      this.gameState.changePause(true);
+      this.gameState.isPaused = true;
     } else if (key === PAUSE && this.gameState.isPaused) {
       keyboardControl.clickedKey = null;
-      this.gameState.changePause(false);
+      this.gameState.isPaused = false;
     }
+  }
+
+  #drawBlocks() {
+    this.gameState.getGameBoard().forEach((block) => block.draw());
   }
 
   swap(firstDiamond, secondDiamond) {

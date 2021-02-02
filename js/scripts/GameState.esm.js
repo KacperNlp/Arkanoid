@@ -1,12 +1,16 @@
-export class GameState {
-  constructor(level, pointToWin) {
-    const _gameBoard = "";
+import { Block } from "./Block.esm.js";
+import { gameLevels } from "./gameLevels.esm.js";
 
-    this._pointsToWin = pointToWin;
+export class GameState {
+  constructor(level) {
+    const levelIndexInArray = Number(level) - 1;
+    const _gameBoard = gameLevels[levelIndexInArray].board.map(
+      ({ x, y, kind }) => new Block(x, y, kind)
+    );
+
     this._level = level;
 
     this.getGameBoard = () => _gameBoard;
-    this.isPlayerWinner = () => _playerPoints >= this._pointsToWin;
   }
 
   #isPaused = false;
@@ -19,7 +23,7 @@ export class GameState {
     return this.#isPaused;
   }
 
-  changePause(pause) {
+  set isPaused(pause) {
     this.#isPaused = pause;
   }
 }
