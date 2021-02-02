@@ -25,9 +25,34 @@ export class Ball extends Sprite {
     this.directionY = -5;
   }
 
-  moveAndCheckCollision() {
-    this.posX += this.directionX;
-    this.posY += this.directionY;
+  moveAndCheckCollision(blocks) {
+    const { directionX, directionY } = this;
+    const hittedBlock = [];
+
+    const vector = {
+      directionX,
+      directionY,
+    };
+
+    this.posX += directionX;
+
+    blocks.forEach((block, id) => {
+      if (this.checkCollisionWithAnotherSprite(vector, block)) {
+        hittedBlock.push(id);
+        this.#reverseDirectionX();
+      }
+    });
+
+    this.posY += directionY;
+
+    blocks.forEach((block, id) => {
+      if (this.checkCollisionWithAnotherSprite(vector, block)) {
+        if (!hittedBlock.includes(id)) {
+          hittedBlock.push(id);
+        }
+        this.reverseDirectionY();
+      }
+    });
 
     if (this.posX < 0 || this.posX > CANVAS_WIDTH - BALL_SIZE) {
       this.#reverseDirectionX();
@@ -36,6 +61,15 @@ export class Ball extends Sprite {
     if (this.posY < 0) {
       this.reverseDirectionY();
     }
+
+    hittedBlock.forEach((id) => {
+      const { kind } = blocks[id];
+      if (!!kind) {
+        blocks[id].kind--;
+      } else if (!kind) {
+        blocks.splice(id, 1);
+      }
+    });
   }
 
   #reverseDirectionX() {

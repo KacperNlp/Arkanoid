@@ -42,7 +42,7 @@ class Game extends Common {
   }
 
   animate() {
-    this.ball.moveAndCheckCollision();
+    this.ball.moveAndCheckCollision(this.gameState.getGameBoard());
     this.#checkCollisionWithPaddle();
     this.#handleGameControle();
     this.#drawSprites();
