@@ -49,4 +49,33 @@ export class Sprite {
       this.#canvas.context.globalAlpha = 1;
     }
   }
+
+  checkCollisionWithAnotherSprite(vector, anotherSprite) {
+    const [
+      vectorDirectionX,
+      vectorDirectionY,
+    ] = this.#getDirectionsOfCurrentElement(vector);
+
+    if (
+      vectorDirectionX > anotherSprite.posX &&
+      vectorDirectionX < anotherSprite.posX + anotherSprite.width &&
+      vectorDirectionY > anotherSprite.posY &&
+      vectorDirectionY < anotherSprite.posY + anotherSprite.height
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  #getDirectionsOfCurrentElement(vector) {
+    const { directionX, directionY } = vector;
+
+    const vectorDirectionX =
+      directionX < 0 ? this.posX : this.posX + this.width;
+    const vectorDirectionY =
+      directionY < 0 ? this.posY : this.posY + this.height;
+
+    return [vectorDirectionX, vectorDirectionY];
+  }
 }

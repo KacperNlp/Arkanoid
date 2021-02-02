@@ -25,14 +25,6 @@ export class Ball extends Sprite {
     this.directionY = -5;
   }
 
-  #reverseDirectionX() {
-    this.directionX = -this.directionX;
-  }
-
-  #reverseDirectionY() {
-    this.directionY = -this.directionY;
-  }
-
   moveAndCheckCollision() {
     this.posX += this.directionX;
     this.posY += this.directionY;
@@ -42,8 +34,16 @@ export class Ball extends Sprite {
     }
 
     if (this.posY < 0) {
-      this.#reverseDirectionY();
+      this.reverseDirectionY();
     }
+  }
+
+  #reverseDirectionX() {
+    this.directionX = -this.directionX;
+  }
+
+  reverseDirectionY() {
+    this.directionY = -this.directionY;
   }
 
   ballIsOutOfTheMap() {

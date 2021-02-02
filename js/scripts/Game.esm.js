@@ -43,9 +43,25 @@ class Game extends Common {
 
   animate() {
     this.ball.moveAndCheckCollision();
+    this.#checkCollisionWithPaddle();
     this.#handleGameControle();
     this.#drawSprites();
     this.#checksEndGame();
+  }
+
+  #checkCollisionWithPaddle() {
+    const { directionX, directionY } = this.ball;
+
+    if (directionY < 0) return;
+
+    const vector = {
+      directionX,
+      directionY,
+    };
+
+    if (this.ball.checkCollisionWithAnotherSprite(vector, this.paddle)) {
+      this.ball.reverseDirectionY();
+    }
   }
 
   #handleGameControle() {
